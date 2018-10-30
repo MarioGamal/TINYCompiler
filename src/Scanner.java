@@ -1,20 +1,10 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 public class Scanner {
     enum STATE{
         START,INCOMMENT,INID,INNUM,INASSIGN,DONE
     }
-
-    public static String Reserveds[] = {"if","then","else","until","end","repeat","read","write"};
-    public static String Symbols[] = {"+","-","*","/","=","<","(",")",";",":="};
-
-    public static ArrayList<String> ReservedWords = new ArrayList<String>(Arrays.asList(Reserveds));
-    public static ArrayList<String> SpecialSymbols = new ArrayList<String>(Arrays.asList(Symbols));
-
 
 
     public static String ReadFile(File file){
@@ -32,18 +22,109 @@ public class Scanner {
         return input;
     }
 
-    public void scanInput(String input){
+    public static ArrayList<Token> scanInput(String input){
+        ArrayList<Token> CapturedTokens = new ArrayList<>();
         STATE currentState = STATE.START;
         char[] charsInput = input.toCharArray();
+        String longTokenVal = "";
+        for(int i=0;i<charsInput.length;i++) {
+            String charstr = Character.toString(charsInput[i]);
+            switch (currentState) {
+                case START:
+                    if(charstr.matches("\\s"))
+                    {
+                        currentState = STATE.START;
+                    }
+                    else if (charstr.matches("\\{"))
+                    {
+                        currentState=STATE.INCOMMENT;
+                    }
+                    else if (charstr.matches("[0-9]"))
+                    {
+                        currentState = STATE.INNUM;
+                        longTokenVal+=charstr;
+                    }
+                    else if(charstr.matches("[a-zA-Z_]"))
+                    {
+                        currentState = STATE.INID;
+                        longTokenVal+=charstr;
+                    }
+                    else if(charstr.matches(":"))
+                    {
+                        currentState = STATE.INASSIGN;
+                        longTokenVal+=charstr;
+                    }
+                    else{
+                        longTokenVal+=charstr;
+                        currentState = STATE.DONE;
+                    }
+                    break;
+                case INCOMMENT:
+                    if (charstr.matches("\\}"))
+                    {
+                        currentState=STATE.START;
+                    }
+                    break;
+                case INNUM:
+                    if (charstr.matches("[0-9]"))
+                    {
+                        longTokenVal+=charstr;
+                        currentState = STATE.INNUM;
+                    }
+                    else {
+                        currentState = STATE.DONE;
+                        i--;
+                    }
+                    break;
+                case INID:
+                    if(charstr.matches("[a-zA-Z_]") || charstr.matches("[0-9]"))
+                    {
+                        longTokenVal+=charstr;
+                        currentState = STATE.INID;
+                    }
+                    else
+                    {
+                        currentState = STATE.DONE;
+                        i--;
+                    }
+                    break;
+                case INASSIGN:
+                    if (charstr.matches("="))
+                    {
+                        longTokenVal+=charstr;
+                        currentState = STATE.DONE;
+                    }
+                    else
+                    {
+                        currentState = STATE.DONE;
+                    }
+                    break;
+                case DONE:
+                    i--;
 
-
+                    if (!longTokenVal.replace("\\s","").equals(""))
+                    {
+                        CapturedTokens.add(new Token(longTokenVal.toLowerCase()));
+                        currentState = STATE.START;
+                        longTokenVal="";
+                    }
+                    break;
+            }
+        }
+        CapturedTokens.add(new Token(longTokenVal.toLowerCase()));
+        return CapturedTokens;
     }
 
 
 
     public static void main(String[] args) {
         File inputFile = new File("src/tiny_sample_code.txt");
-        STATE currentState = STATE.START;
+        String code = ReadFile(inputFile);
+        ArrayList<Token> Tokens = scanInput(code);
+        for(Token x : Tokens)
+        {
+            System.out.println(x.stringVal + " => "+x.type);
+        }
 
 
 
