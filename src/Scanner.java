@@ -117,21 +117,36 @@ public class Scanner {
 
 
 
-    public static void main(String[] args) {
-        File inputFile = new File("src/tiny_sample_code.txt");
+    public static void main(String[] args) throws IOException {
+        File inputFile = new File(args[0]);
         String code = ReadFile(inputFile);
+        File outputFile = new File(args[0] + "/../output_file.txt");
         ArrayList<Token> Tokens = scanInput(code);
+
+        PrintStream out = new PrintStream(new FileOutputStream(args[0].replace(getExtension(args[0]),"out.txt")));
+        System.setOut(out);
+
         for(Token x : Tokens)
         {
             System.out.println(x.stringVal + " => "+x.type);
         }
 
-
-
-
-
     }
 
+    public static String getExtension(String filename) {
+        if (filename == null) {
+            return null;
+        }
+        int extensionPos = filename.lastIndexOf('.');
+        int lastUnixPos = filename.lastIndexOf('/');
+        int lastWindowsPos = filename.lastIndexOf('\\');
+        int lastSeparator = Math.max(lastUnixPos, lastWindowsPos);
 
-
+        int index = lastSeparator > extensionPos ? -1 : extensionPos;
+        if (index == -1) {
+            return "";
+        } else {
+            return filename.substring(index + 1);
+        }
+    }
 }

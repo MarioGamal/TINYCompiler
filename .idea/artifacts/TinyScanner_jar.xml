@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TinyScanner:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TinyScanner_jar</output-path>
+    <root id="archive" name="TinyScanner.jar">
+      <element id="module-output" name="TinyScanner" />
+    </root>
+  </artifact>
+</component>
