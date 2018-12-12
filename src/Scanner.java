@@ -120,11 +120,11 @@ public class Scanner {
     public static void main(String[] args) throws IOException {
         File inputFile = new File(args[0]);
         String code = ReadFile(inputFile);
-        File outputFile = new File(args[0] + "/../output_file.txt");
+        //File outputFile = new File(args[0] + "/../output_file.txt");
         ArrayList<Token> Tokens = scanInput(code);
 
-        PrintStream out = new PrintStream(new FileOutputStream(args[0].replace(getExtension(args[0]),"out.txt")));
-        System.setOut(out);
+        //PrintStream out = new PrintStream(new FileOutputStream(args[0].replace(getExtension(args[0]),"out.txt")));
+        //System.setOut(out);
 
         for(Token x : Tokens)
         {
