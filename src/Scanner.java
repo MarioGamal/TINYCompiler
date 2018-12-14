@@ -111,13 +111,14 @@ public class Scanner {
                     break;
             }
         }
+        if(!longTokenVal.equals(""))
         CapturedTokens.add(new Token(longTokenVal.toLowerCase()));
         return CapturedTokens;
     }
 
 
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         File inputFile = new File(args[0]);
         String code = ReadFile(inputFile);
         //File outputFile = new File(args[0] + "/../output_file.txt");
@@ -131,7 +132,7 @@ public class Scanner {
             System.out.println(x.stringVal + " => "+x.type);
         }
 
-    }
+    }*/
 
     public static String getExtension(String filename) {
         if (filename == null) {
