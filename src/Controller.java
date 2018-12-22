@@ -34,7 +34,7 @@ public class Controller {
 
         if(f!=null)
         {
-            filepathLabel.setText("Selected File:  " + f.getAbsolutePath());
+            filepathLabel.setText("Selected File:  " + f.getCanonicalPath());
             scannerip = Scanner.ReadFile(f);
             ArrayList<Token> Tokens = Scanner.scanInput(scannerip);
             for(Token x : Tokens)
@@ -43,6 +43,7 @@ public class Controller {
             }
             ParserOptimized parser = new ParserOptimized(f);
             JSONObject jsonop = parser.prog();
+            System.out.println(jsonop.toJSONString());
 
             //PRETTY PRINT UGLYJSON
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -52,7 +53,7 @@ public class Controller {
 
             JSONText.setText(indentedJsonString);
 
-        // DRAWING OUTPUT OF PARSER
+            // DRAWING OUTPUT OF PARSER
             //WebEngine engine = parserOp.getEngine();
             //File htmlFile = new File("C:\\Users\\Mario\\IdeaProjects\\TinyScanner\\src\\index.html");
             //engine.load(htmlFile.toURI().toString());

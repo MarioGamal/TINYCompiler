@@ -1,7 +1,3 @@
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -18,7 +14,7 @@ public class ParserOptimized {
     private boolean skip = false;
     public static int counter = 0;
     public static boolean no_parent = true;
-    public static JsonArray siblings = new JsonArray();
+    //public static JsonArray siblings = new JsonArray();
 
     //CONSTRUCTOR
     public ParserOptimized(File file){
@@ -184,17 +180,26 @@ public class ParserOptimized {
     }
 
     public  JSONObject assign_stmt() throws IOException{
-
-        JSONObject result = new JSONObject();
-        result.put("id",String.valueOf(counter));
-        result.put("name","assign ("+ScannedTokens.get(TokensIterator).stringVal+")");
-        result.put("no_parent",String.valueOf(no_parent));
-        isMatchingType(Token.TokenType.Identifier);
-        isMatchingVal(":=");
+        JSONObject result = null;
+        if(ScannedTokens.get(TokensIterator).type == Token.TokenType.Identifier)
+        {
+            String id = ScannedTokens.get(TokensIterator).stringVal;
+            isMatchingType(Token.TokenType.Identifier);
+            if(ScannedTokens.get(TokensIterator).stringVal.equals(":="))
+            {
+                result = new JSONObject();
+                result.put("id",String.valueOf(counter));
+                result.put("name","assign ("+id+")");
+                result.put("no_parent",String.valueOf(no_parent));
+                //isMatchingType(Token.TokenType.Identifier);
+                isMatchingVal(":=");
+                result.put("children",exp());
+            }
+        }
 
         //creation of children array of assign-statement
      // creation of assign-body object
-        result.put("children",exp());
+
 
         return result;
     }
@@ -320,11 +325,10 @@ public class ParserOptimized {
         while(ScannedTokens.get(TokensIterator).stringVal.equals(";"))
         {
             isMatchingVal(";");
-            result.put("children",childrenArr);
+            childrenArr.add(stmt());
             if(TokensIterator == ScannedTokens.size()) {
                 break;
             }
-            return result;
         }
 
         result.put("children",childrenArr);
@@ -337,7 +341,7 @@ public class ParserOptimized {
         return(stmt_seq());
     }
 
-    public JsonArray generateSiblings(JsonObject x)
+   /* public JsonArray generateSiblings(JsonObject x)
     {
 
         JsonElement jsonElement = new JsonParser().parse(x.toString());
@@ -363,7 +367,7 @@ public class ParserOptimized {
 
 
         return siblings;
-    }
+    }*/
 
 
 }
