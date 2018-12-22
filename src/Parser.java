@@ -322,19 +322,6 @@ public class Parser {
         stmt_seq();
     }
 
-
-
-
-    public static void main(String[] args) throws IOException {
-        Parser parser = new Parser();
-        parser.prog();
-        System.out.println(parser.root.toJSONString());
-        for(Token x : parser.ScannedTokens)
-        {
-            System.out.println(x.stringVal);
-        }
-        System.out.println(parser.ScannedTokens.size());
-    }
 }
 
 

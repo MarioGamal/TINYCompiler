@@ -1,0 +1,12 @@
+
+.jfx-tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #0066ff;
+    -fx-alignment: CENTER;
+    -fx-border-radius: 2;
+}
+.tab-pane .tab-header-area .header-region .tab-container .tab-label{
+    -fx-alignment: CENTER;
+}
+.tab-selected-line{
+    -fx-background-color: #fff;
+}

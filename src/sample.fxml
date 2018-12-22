@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" style="-fx-background-color: #ccddff;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: #ccddff;">
+         <children>
+            <JFXButton fx:id="inputBtn" buttonType="RAISED" onAction="#filechooserBtn" prefHeight="39.0" prefWidth="141.0" ripplerFill="#79b6ee" style="-fx-background-color: #0066ff; -fx-background-radius: 0;" text="Choose input file" textAlignment="CENTER" textFill="#fffefe">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </JFXButton>
+            <Label fx:id="filepathLabel" alignment="CENTER" text="No files selected" textFill="#867b7b">
+               <HBox.margin>
+                  <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Italic" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <JFXTabPane prefWidth="600.0" rotateGraphic="true" style="-fx-background-color: #ccddff;" stylesheets="@tabpaneStyle.css">
+         <tabs>
+            <Tab style="-fx-background-color: #0066ff;" text="Scanner Output">
+               <content>
+                  <VBox>
+                     <children>
+                        <JFXTextArea fx:id="ScannerOpText" focusColor="#0066ff" prefHeight="456.0" prefWidth="560.0" unFocusColor="#4d4d4db9">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </VBox.margin>
+                        </JFXTextArea>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab text="JSON Formated Parser Output">
+               <content>
+                  <VBox>
+                     <children>
+                        <JFXTextArea fx:id="JSONText" focusColor="#0066ff" prefHeight="456.0" prefWidth="560.0" unFocusColor="#4d4d4db9">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </VBox.margin>
+                        </JFXTextArea>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </JFXTabPane>
+   </children>
+</VBox>
